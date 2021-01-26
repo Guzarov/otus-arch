@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: class5-deploy
+spec:
+  selector:
+    matchLabels:
+      app: class5-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: class5-app
+    spec:
+      containers:
+      - name: class5-pod
+        image: docker.io/guzarov/otus-arch:class5-go
+        ports:
+          - containerPort: 8000
+        livenessProbe:
+          httpGet:
+            port: 8000
+            path: /health
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            port: 8000
+            path: /health
+          initialDelaySeconds: 10
+          periodSeconds: 5
+
