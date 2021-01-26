@@ -21,6 +21,4 @@ repositories {
 dependencies {
     implementation(enforcedPlatform("io.quarkus:quarkus-bom:1.11.0.Final"))
     implementation("io.quarkus:quarkus-resteasy-jackson")
-    testImplementation("io.quarkus:quarkus-junit5")
-
 }

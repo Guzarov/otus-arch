@@ -10,7 +10,7 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN ./gradlew quarkusBuild
 
-FROM adoptopenjdk/openjdk11:alpine-slim
+FROM adoptopenjdk/openjdk11:alpine-jre
 COPY --from=BUILD /usr/src/app/service/build/lib /app/lib/
 COPY --from=BUILD /usr/src/app/service/build/service-unspecified-runner.jar /app/app.jar
 EXPOSE 8000

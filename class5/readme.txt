@@ -26,8 +26,25 @@ Cобрать локально образ приложения в докер.
 
 
 
-
-
-docker build -t guzarov/otus-arch:class5-quarkus .
+- сборка docker image
 docker login -u guzarov
+docker build -t guzarov/otus-arch:class5-quarkus ./app-quarkus
 docker push guzarov/otus-arch:class5-quarkus
+docker build -t guzarov/otus-arch:class5-go ./app-go
+docker push guzarov/otus-arch:class5-go
+
+- настрйока кубернетис в doker desktop (однократно)
+kubectl create namespace class5
+kubectl config set-context --current --namespace=class5
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install ingress-nginx ingress-nginx/ingress-nginx
+
+- деплой сервиса в кубернетис
+kubectl apply -f ./deploy/
+
+- проверка
+curl -H'Host: arch.homework' http://localhost/otusapp/guzarov/health
+
+- запуск тестов postman
+newman run ./tests/class5-quarkus.postman_collection.json
