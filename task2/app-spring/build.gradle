@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "org.openapi.generator" version "5.0.1"
 }
 
 group = 'otus.task2'
@@ -15,6 +16,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'io.springfox:springfox-swagger2:2.10.5'
+	implementation 'javax.validation:validation-api'
+	//implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
+
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
@@ -25,4 +32,19 @@ test {
 
 bootJar {
 	archiveFileName = "app.jar"
+}
+
+sourceSets.main.java.srcDirs += ["$buildDir/generated/src/main/java".toString()]
+
+openApiGenerate {
+	generatorName = "spring"
+	inputSpec = "$projectDir/src/main/resources/otus55-users-1.0.0-resolved.yaml".toString()
+	outputDir = "$buildDir/generated".toString()
+	apiPackage = "otus.task2.api"
+	invokerPackage = "otus.task2.invoker"
+	modelPackage = "otus.task2.model"
+	configOptions = [
+			 dateLibrary: "java8"
+			,interfaceOnly: "true"
+	]
 }
