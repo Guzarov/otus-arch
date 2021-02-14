@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "task2-chart.fullname" . }}
+  labels:
+    {{- include "task2-chart.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "task2-chart.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.application.replicaCount }}
+  template:
+    metadata:
+      labels:
+        {{- include "task2-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.application.image }}"
+        envFrom:
+              - configMapRef:
+                 name: {{ include "task2-chart.fullname" . }}
+              - secretRef:
+                 name: {{ include "task2-chart.fullname" . }}
+        ports:
+          - containerPort: {{ .Values.application.port }}
+        livenessProbe:
+          httpGet:
+            port: {{ .Values.application.port }}
+            path: /actuator/health/liveness
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            port: {{ .Values.application.port }}
+            path: /actuator/health/readiness
+          initialDelaySeconds: 10
+          periodSeconds: 5
