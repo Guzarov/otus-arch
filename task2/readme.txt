@@ -21,3 +21,8 @@ Ingress-ы должны также вести на url arch.homework/ (как и
 Задание со звездочкой:
 +3 балла за шаблонизацию приложения в helm 3 чартах
 +2 балла за использование официального helm чарта для БД
+
+
+
+docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
+psql -h localhost -U postgres
