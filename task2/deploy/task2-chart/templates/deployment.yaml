@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.application.image }}"
+        image: "{{ .Values.application.appImage }}"
         envFrom:
               - configMapRef:
                  name: {{ include "task2-chart.fullname" . }}

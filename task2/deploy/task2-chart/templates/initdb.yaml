@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name | quote }}
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: {{ .Release.Name | quote }}
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: check-db-ready
+          image: postgres:latest
+          command:
+            - sh
+            - "-c"
+            - |
+              until pg_isready -h {{ .Values.postgresqlHost }};
+              do echo waiting for database; sleep 2; done;      
+      containers:
+      - name: post-install-job
+        image: {{ .Values.application.initdbIamge | quote }}
+        env:
+          - name: FLYWAY_USER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "task2-chart.fullname" . }}
+                key: DB_USER
+          - name: FLYWAY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "task2-chart.fullname" . }}
+                key: DB_PASSWORD
+          - name: FLYWAY_DRIVER
+            fvalue: org.postgresql.Driver
+          - name: FLYWAY_URL
+            value: jdbc:postgresql://{{ .Values.postgresqlHost }}:5432/{{ .Values.postgresqlDatabase }}
+        command: ["migrate"]
+  backoffLimit: 1
+        

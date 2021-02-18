@@ -23,6 +23,10 @@ Ingress-ы должны также вести на url arch.homework/ (как и
 +2 балла за использование официального helm чарта для БД
 
 
+helm install -f values.yaml task2-db bitnami/postgresql
+helm delete task2-db
 
-docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
+
+
+docker run --rm -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
 psql -h localhost -U postgres
