@@ -41,7 +41,7 @@ sourceSets.main.java.srcDirs += ["$buildDir/generated/src/main/java".toString()]
 
 openApiGenerate {
 	generatorName = "spring"
-	inputSpec = "$projectDir/src/main/resources/otus55-users-1.0.0-resolved.yaml".toString()
+	inputSpec = "$projectDir/src/main/resources/static/otus55-users-1.0.0-resolved.yaml".toString()
 	outputDir = "$buildDir/generated".toString()
 	apiPackage = "otus.task2.api"
 	invokerPackage = "otus.task2.invoker"

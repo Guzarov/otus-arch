@@ -10,7 +10,7 @@ metadata:
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
-    "helm.sh/hook": post-install
+    "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
@@ -35,19 +35,14 @@ spec:
       containers:
       - name: post-install-job
         image: {{ .Values.application.initdbIamge | quote }}
+        # https://stackoverflow.com/questions/59423084/kubernetes-use-secrets-on-pre-install-job
         env:
           - name: FLYWAY_USER
-            valueFrom:
-              configMapKeyRef:
-                name: {{ include "task2-chart.fullname" . }}
-                key: DB_USER
+            value: {{ .Values.postgresqlUsername }}
           - name: FLYWAY_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "task2-chart.fullname" . }}
-                key: DB_PASSWORD
+            value: {{ .Values.postgresqlPassword }}
           - name: FLYWAY_DRIVER
-            fvalue: org.postgresql.Driver
+            value: org.postgresql.Driver
           - name: FLYWAY_URL
             value: jdbc:postgresql://{{ .Values.postgresqlHost }}:5432/{{ .Values.postgresqlDatabase }}
         command: ["migrate"]

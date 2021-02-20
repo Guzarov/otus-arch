@@ -23,7 +23,18 @@ Ingress-ы должны также вести на url arch.homework/ (как и
 +2 балла за использование официального helm чарта для БД
 
 
+docker login -u guzarov
+docker biuld . -t guzarov/otus-arch:task2-app-v1
+docker biuld . -t guzarov/otus-arch:task2-initdb
+docker push guzarov/otus-arch:task2-app-v1
+docker push guzarov/otus-arch:task2-initdb
+
+
 helm install -f values.yaml task2-db bitnami/postgresql
+helm install -f values.yaml task2-app .
+
+
+
 helm delete task2-db
 
 

@@ -1,12 +1,12 @@
 application:
-  port: 8000
+  port: "8000"
   host: "arch.homework"
   replicaCount: 1
-  appImage: "docker.io/guzarov/otus-arch:task2-spring"
-  initdbIamge: ""
+  appImage: "docker.io/guzarov/otus-arch:task2-app-v1"
+  initdbIamge: "docker.io/guzarov/otus-arch:task2-initdb"
 
 service.type: NodePort
-postgresqlHost: dbhost
+postgresqlHost: task2-db-postgresql
 postgresqlUsername: db_user
 postgresqlPassword: SecretP@ssword
 postgresqlDatabase: db_task2
