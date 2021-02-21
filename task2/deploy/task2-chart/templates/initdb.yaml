@@ -45,6 +45,6 @@ spec:
             value: org.postgresql.Driver
           - name: FLYWAY_URL
             value: jdbc:postgresql://{{ .Values.postgresqlHost }}:5432/{{ .Values.postgresqlDatabase }}
-        command: ["migrate"]
+        command: ["flyway", "migrate"]
   backoffLimit: 1
         

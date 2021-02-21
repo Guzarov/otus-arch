@@ -1,5 +1,4 @@
 application:
-  port: "8000"
   host: "arch.homework"
   replicaCount: 1
   appImage: "docker.io/guzarov/otus-arch:task2-app-v1"

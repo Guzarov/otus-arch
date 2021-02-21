@@ -24,17 +24,17 @@ spec:
               - secretRef:
                  name: {{ include "task2-chart.fullname" . }}
         ports:
-          - containerPort: {{ .Values.application.port }}
+          - containerPort: 8080
         livenessProbe:
           httpGet:
-            port: {{ .Values.application.port }}
+            port: 8080
             path: /actuator/health/liveness
           initialDelaySeconds: 10
           periodSeconds: 5
           timeoutSeconds: 2
         readinessProbe:
           httpGet:
-            port: {{ .Values.application.port }}
+            port: 8080
             path: /actuator/health/readiness
           initialDelaySeconds: 10
           periodSeconds: 5

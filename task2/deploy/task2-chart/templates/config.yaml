@@ -4,7 +4,6 @@ kind: ConfigMap
 metadata: 
   name: {{ include "task2-chart.fullname" . }}
 data:
-  APP_PORT: "8000"
   DB_HOST: "{{ .Values.postgresqlHost }}"
   DB_NAME: "{{ .Values.postgresqlDatabase }}"
   DB_USER: "{{ .Values.postgresqlUsername }}"
