@@ -6,7 +6,62 @@
 	},
 	"item": [
 		{
-			"name": "create user",
+			"name": "get exists user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"User has correct name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.username).to.eql(\"user1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/guzarov/user/1",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"guzarov",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 - Created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"// use last part of url in location header as userId",
+							"var location = postman.getResponseHeader(\"Location\")",
+							"pm.collectionVariables.set(\"userId\", location.substring(location.lastIndexOf('/') + 1))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -20,14 +75,55 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/user",
+					"raw": "http://{{baseUrl}}/otusapp/guzarov/user/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8080",
 					"path": [
-						"user"
+						"otusapp",
+						"guzarov",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get created user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Corrent name of created user\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.email).to.eql(\"bestjohn@doe.com\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/guzarov/user/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"guzarov",
+						"user",
+						"{{userId}}"
 					]
 				}
 			},
@@ -35,6 +131,19 @@
 		},
 		{
 			"name": "update user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204 - no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -48,35 +157,55 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/user/1",
+					"raw": "http://{{baseUrl}}/otusapp/guzarov/user/{{userId}}",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8080",
 					"path": [
+						"otusapp",
+						"guzarov",
 						"user",
-						"1"
+						"{{userId}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "get user",
+			"name": "get updated user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Update was corrent\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.username).to.eql(\"changed\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/user/1",
+					"raw": "http://{{baseUrl}}/otusapp/guzarov/user/{{userId}}",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8080",
 					"path": [
+						"otusapp",
+						"guzarov",
 						"user",
-						"1"
+						"{{userId}}"
 					]
 				}
 			},
@@ -84,23 +213,102 @@
 		},
 		{
 			"name": "delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/user/1",
+					"raw": "http://{{baseUrl}}/otusapp/guzarov/user/{{userId}}",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "8080",
 					"path": [
+						"otusapp",
+						"guzarov",
 						"user",
-						"1"
+						"{{userId}}"
 					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "get deleted user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400 - bad request\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/guzarov/user/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"guzarov",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "arch.homework"
+		},
+		{
+			"key": "userId",
+			"value": ""
 		}
 	]
 }

@@ -10,5 +10,3 @@ create table if not exists tbl_user
 	username varchar(255)
 );
 
-
-
