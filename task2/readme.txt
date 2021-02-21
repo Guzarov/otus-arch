@@ -33,11 +33,21 @@ docker push guzarov/otus-arch:task2-initdb
 helm install -f values.yaml task2-db bitnami/postgresql
 helm install -f values.yaml task2-app .
 
-
-
 helm delete task2-db
-
-
 
 docker run --rm -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
 psql -h localhost -U postgres
+
+
+1) ссылка на директорию в github, где находится директория с манифестами кубернетеса:
+https://github.com/Guzarov/otus-arch/tree/master/task2/deploy/task2-chart
+
+2) инструкция по запуску приложения.
+все команды в каталоге https://github.com/Guzarov/otus-arch/tree/master/task2/deploy/task2-chart
+установка СУБД из официальоного чарта с нужными значениями: helm install -f values.yaml task2-db bitnami/postgresql
+установка приложения вместе с job для первоначальной миграции из чарта: helm install -f values.yaml task2-app .
+
+3) Postman коллекция, в которой будут представлены примеры запросов к сервису на создание, получение, 
+изменение и удаление пользователя. Важно: в postman коллекции использовать базовый url - arch.homework.
+https://raw.githubusercontent.com/Guzarov/otus-arch/master/task2/tests/task2-spring.postman_collection.json
+
