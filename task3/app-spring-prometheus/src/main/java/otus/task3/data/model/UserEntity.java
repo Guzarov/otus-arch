@@ -1,4 +1,4 @@
-package otus.task2.data.model;
+package otus.task3.data.model;
 
 import javax.persistence.*;
 

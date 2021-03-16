@@ -1,4 +1,4 @@
-package otus.task2.demo;
+package otus.task3.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

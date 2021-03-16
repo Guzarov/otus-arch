@@ -1,12 +1,12 @@
-package otus.task2.api;
+package otus.task3.api;
 
 import io.micrometer.core.annotation.Timed;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import otus.task2.data.UserService;
-import otus.task2.data.model.UserEntity;
-import otus.task2.model.User;
+import otus.task3.data.UserService;
+import otus.task3.data.model.UserEntity;
+import otus.task3.model.User;
 
 import javax.validation.Valid;
 import java.net.URI;

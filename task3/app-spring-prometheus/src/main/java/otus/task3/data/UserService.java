@@ -1,7 +1,7 @@
-package otus.task2.data;
+package otus.task3.data;
 
 import org.springframework.stereotype.Service;
-import otus.task2.data.model.UserEntity;
+import otus.task3.data.model.UserEntity;
 
 import java.util.Optional;
 
