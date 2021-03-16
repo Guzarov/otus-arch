@@ -46,9 +46,9 @@ openApiGenerate {
 	generatorName = "spring"
 	inputSpec = "$projectDir/src/main/resources/static/otus55-users-1.0.0-resolved.yaml".toString()
 	outputDir = "$buildDir/generated".toString()
-	apiPackage = "otus.task2.api"
-	invokerPackage = "otus.task2.invoker"
-	modelPackage = "otus.task2.model"
+	apiPackage = "otus.task3.api"
+	invokerPackage = "otus.task3.invoker"
+	modelPackage = "otus.task3.model"
 	configOptions = [
 			 dateLibrary: "java8"
 			,interfaceOnly: "true"

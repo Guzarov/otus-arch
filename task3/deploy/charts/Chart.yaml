@@ -1,0 +1,7 @@
+apiVersion: v2
+name: task3-chart
+description: A Helm chart for deploy service for task 3
+
+type: application
+version: 0.0.1
+appVersion: "0.0.2"

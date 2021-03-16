@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: {{ include "task3-chart.fullname" . }}
+data:
+  DB_HOST: "{{ .Values.postgresqlHost }}"
+  DB_NAME: "{{ .Values.postgresqlDatabase }}"
+  DB_USER: "{{ .Values.postgresqlUsername }}"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "task3-chart.fullname" . }}
+data:
+  DB_PASSWORD: {{ printf .Values.postgresqlPassword | b64enc | quote }}
+  

@@ -1,0 +1,11 @@
+application:
+  host: "arch.homework"
+  replicaCount: 2
+  appImage: "docker.io/guzarov/otus-arch:task3-app-v2"
+  initdbIamge: "docker.io/guzarov/otus-arch:task2-initdb"
+
+service.type: NodePort
+postgresqlHost: task3-db-postgresql
+postgresqlUsername: db_user
+postgresqlPassword: SecretP@ssword
+postgresqlDatabase: db_task3
